@@ -1,4 +1,24 @@
 # Databricks notebook source
+# MAGIC %run "/Users/evan@datainsights.de/GAN_Invisibility_Cloak/options/test_options"
+
+# COMMAND ----------
+
+# MAGIC %run "/Users/evan@datainsights.de/GAN_Invisibility_Cloak/data/__init__"
+
+# COMMAND ----------
+
+# MAGIC %run "/Users/evan@datainsights.de/GAN_Invisibility_Cloak/models/__init__"
+
+# COMMAND ----------
+
+# MAGIC %run "/Users/evan@datainsights.de/GAN_Invisibility_Cloak/util/visualizer"
+
+# COMMAND ----------
+
+# MAGIC %run "/Users/evan@datainsights.de/GAN_Invisibility_Cloak/util/html"
+
+# COMMAND ----------
+
 """General-purpose test script for image-to-image translation.
 
 Once you have trained your model with train.py, you can use this script to test the model.
@@ -28,12 +48,6 @@ See training and test tips at: https://github.com/junyanz/pytorch-CycleGAN-and-p
 See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/qa.md
 """
 import os
-from options.test_options import TestOptions
-from data import create_dataset
-from models import create_model
-from util.visualizer import save_images
-from util import html
-
 
 if __name__ == '__main__':
     opt = TestOptions().parse()  # get test options
@@ -51,7 +65,7 @@ if __name__ == '__main__':
     if opt.load_iter > 0:  # load_iter is 0 by default
         web_dir = '{:s}_iter{:d}'.format(web_dir, opt.load_iter)
     print('creating web directory', web_dir)
-    webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
+    webpage = HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
     # test with eval mode. This only affects layers like batchnorm and dropout.
     # For [pix2pix]: we use batchnorm and dropout in the original pix2pix. You can experiment it with and without eval() mode.
     # For [CycleGAN]: It should not affect CycleGAN as CycleGAN uses instancenorm without dropout.
@@ -68,3 +82,6 @@ if __name__ == '__main__':
             print('processing (%04d)-th image... %s' % (i, img_path))
         save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize)
     webpage.save()  # save the HTML
+
+# COMMAND ----------
+

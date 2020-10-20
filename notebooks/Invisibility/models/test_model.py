@@ -1,7 +1,11 @@
 # Databricks notebook source
-from .base_model import BaseModel
-from . import networks
+# MAGIC %run "/Users/evan@datainsights.de/GAN_Invisibility_Cloak/models/base_model"
 
+# COMMAND ----------
+
+# MAGIC %run "/Users/evan@datainsights.de/GAN_Invisibility_Cloak/options/networks"
+
+# COMMAND ----------
 
 class TestModel(BaseModel):
     """ This TesteModel can be used to generate CycleGAN results for only one direction.
@@ -68,3 +72,6 @@ class TestModel(BaseModel):
     def optimize_parameters(self):
         """No optimization for test model."""
         pass
+
+# COMMAND ----------
+
